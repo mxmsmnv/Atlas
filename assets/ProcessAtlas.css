@@ -1,0 +1,1249 @@
+.ProcessAtlas.AtlasWorkspace {
+	color: var(--pw-text-color);
+}
+
+.ProcessAtlas .AtlasSection-head,
+.ProcessAtlas .AtlasPanel-head,
+.ProcessAtlas .AtlasActions,
+.ProcessAtlas .AtlasRowActions,
+.ProcessAtlas .AtlasStatus,
+.ProcessAtlas .AtlasMetric,
+.ProcessAtlas .AtlasCallout {
+	display: flex;
+	align-items: center;
+}
+
+.ProcessAtlas .AtlasNavRow {
+	display: flex;
+	align-items: flex-start;
+	gap: 20px;
+	margin-bottom: 24px;
+}
+
+.ProcessAtlas .AtlasNav {
+	min-width: 0;
+	margin: 0;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasNav > * {
+	padding-left: 0;
+}
+
+.ProcessAtlas .AtlasNav > * > a {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.ProcessAtlas .AtlasStatus {
+	gap: 7px;
+	min-height: 38px;
+	box-sizing: border-box;
+	padding: 6px 10px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasStatus > i {
+	color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasStatus.needs-setup > i {
+	color: var(--pw-error-inline-text-color);
+}
+
+.ProcessAtlas .AtlasStatus span {
+	display: flex;
+	align-items: baseline;
+	gap: 7px;
+}
+
+.ProcessAtlas .AtlasStatus small {
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasSection {
+	margin-bottom: var(--pw-spacing, 25px);
+}
+
+.ProcessAtlas .AtlasSection-head,
+.ProcessAtlas .AtlasPanel-head {
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+.ProcessAtlas .AtlasSection-head p,
+.ProcessAtlas .AtlasPanel-head p,
+.ProcessAtlas .AtlasSection h2,
+.ProcessAtlas .AtlasPanel h3 {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasActions,
+.ProcessAtlas .AtlasRowActions {
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.ProcessAtlas .uk-button,
+.ProcessAtlas .uk-button:hover,
+.ProcessAtlas .uk-button:focus,
+.ProcessAtlas .uk-button:active {
+	text-decoration: none !important;
+}
+
+.ProcessAtlas .AtlasMetrics {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 15px;
+	margin-left: 0;
+	margin: 20px 0;
+}
+
+.ProcessAtlas .AtlasMetrics > * {
+	width: auto;
+	min-width: 0;
+	padding-left: 0;
+}
+
+.ProcessAtlas .AtlasMetric {
+	gap: 14px;
+	min-height: 104px;
+	box-sizing: border-box;
+	padding: 20px;
+	border-left: 3px solid var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasMetric-icon,
+.ProcessAtlas .AtlasEmpty-icon,
+.ProcessAtlas .AtlasCollectionHero-icon,
+.ProcessAtlas .AtlasStat-icon,
+.ProcessAtlas .AtlasCollectionIcon,
+.ProcessAtlas .AtlasJob-icon {
+	color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasMetric-icon {
+	font-size: 1.2rem;
+}
+
+.ProcessAtlas .AtlasMetric span,
+.ProcessAtlas .AtlasMetric strong {
+	display: block;
+}
+
+.ProcessAtlas .AtlasMetric strong {
+	margin-top: 4px;
+	font-size: 1.55rem;
+	line-height: 1.1;
+}
+
+.ProcessAtlas .AtlasPanel {
+	margin: 20px 0;
+	padding: var(--pw-spacing, 25px);
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+}
+
+.ProcessAtlas .AtlasOverviewHero {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 4px 0 8px;
+}
+
+.ProcessAtlas .AtlasOverviewHero h2,
+.ProcessAtlas .AtlasOverviewHero p {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasOverviewHero h2 {
+	margin-bottom: 5px;
+}
+
+.ProcessAtlas .AtlasOverviewHero p {
+	max-width: 47rem;
+}
+
+.ProcessAtlas .AtlasDashboardGrid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.65fr) minmax(18rem, .85fr);
+	align-items: start;
+	gap: 15px;
+}
+
+.ProcessAtlas .AtlasDashboardGrid .AtlasPanel {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasOverviewCollections .AtlasPanel-head,
+.ProcessAtlas .AtlasOverviewStatus .AtlasPanel-head {
+	align-items: flex-start;
+}
+
+.ProcessAtlas .AtlasOverviewCollections .AtlasPanel-head p,
+.ProcessAtlas .AtlasOverviewStatus .AtlasPanel-head p {
+	margin-top: 4px;
+}
+
+.ProcessAtlas .AtlasDistributionMain {
+	display: grid;
+	grid-template-columns: minmax(8rem, .7fr) minmax(7rem, 1fr);
+	align-items: center;
+	gap: 18px;
+	min-width: 0;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasDistributionMain > span:first-child,
+.ProcessAtlas .AtlasDistributionMain code,
+.ProcessAtlas .AtlasDistributionMain small {
+	display: block;
+}
+
+.ProcessAtlas .AtlasDistributionMain small {
+	margin-top: 2px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasDistributionTrack {
+	height: 5px;
+	background: var(--pw-muted-background);
+}
+
+.ProcessAtlas .AtlasDistributionTrack i {
+	display: block;
+	height: 100%;
+	background: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasDistributionShare {
+	min-width: 4.5rem;
+	text-align: right;
+}
+
+.ProcessAtlas .AtlasStatusList > div,
+.ProcessAtlas .AtlasStatusLink,
+.ProcessAtlas .AtlasQuickActions a {
+	display: flex;
+	align-items: center;
+}
+
+.ProcessAtlas .AtlasStatusList > div {
+	gap: 11px;
+	padding: 11px 0;
+	border-top: 1px solid var(--pw-border-color);
+}
+
+.ProcessAtlas .AtlasStatusIndicator {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	color: var(--pw-main-color);
+	background: var(--pw-muted-background);
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasStatusIndicator.is-warning {
+	color: var(--pw-error-inline-text-color);
+}
+
+.ProcessAtlas .AtlasStatusList strong,
+.ProcessAtlas .AtlasStatusList small,
+.ProcessAtlas .AtlasStatusLink strong,
+.ProcessAtlas .AtlasStatusLink small,
+.ProcessAtlas .AtlasQuickActions strong,
+.ProcessAtlas .AtlasQuickActions small {
+	display: block;
+}
+
+.ProcessAtlas .AtlasStatusList small,
+.ProcessAtlas .AtlasStatusLink small,
+.ProcessAtlas .AtlasQuickActions small {
+	margin-top: 2px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasStatusLink {
+	gap: 10px;
+	margin-top: 12px;
+	padding: 13px;
+	border: 1px solid var(--pw-border-color);
+	color: var(--pw-text-color);
+	text-decoration: none;
+}
+
+.ProcessAtlas .AtlasStatusLink > span:nth-child(2) {
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasQuickActions {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 15px;
+	margin-top: 15px;
+}
+
+.ProcessAtlas .AtlasQuickActions a {
+	gap: 12px;
+	min-width: 0;
+	padding: 16px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+	color: var(--pw-text-color);
+	text-decoration: none;
+}
+
+.ProcessAtlas .AtlasQuickActions a > span:first-child {
+	color: var(--pw-main-color);
+	font-size: 1.1rem;
+}
+
+.ProcessAtlas .AtlasQuickActions a > span:nth-child(2) {
+	min-width: 0;
+	flex: 1;
+}
+
+.ProcessAtlas #AtlasAddEntry {
+	scroll-margin-top: 16px;
+}
+
+.ProcessAtlas .AtlasCollectionList > a {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 0;
+	border-top: 1px solid var(--pw-border-color);
+	color: var(--pw-text-color);
+	text-decoration: none;
+}
+
+.ProcessAtlas .AtlasCollectionList > a span {
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasEmpty {
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+}
+
+.ProcessAtlas .AtlasEmpty-icon {
+	font-size: 2rem;
+}
+
+.ProcessAtlas .AtlasEmpty h3 {
+	margin: 10px 0 4px;
+}
+
+.ProcessAtlas .AtlasEmpty p {
+	max-width: 36rem;
+	margin: 0 auto 16px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasOverviewEmpty {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 24px;
+	margin-top: 15px;
+	padding: 30px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+}
+
+.ProcessAtlas .AtlasOverviewEmpty-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 54px;
+	height: 54px;
+	color: var(--pw-main-color);
+	background: var(--pw-muted-background);
+	font-size: 1.35rem;
+}
+
+.ProcessAtlas .AtlasOverviewEmpty h3,
+.ProcessAtlas .AtlasOverviewEmpty p {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasOverviewEmpty h3 {
+	margin-bottom: 6px;
+}
+
+.ProcessAtlas .AtlasOverviewEmpty-main > p {
+	max-width: 48rem;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasOverviewEmpty .AtlasActions {
+	margin-top: 20px;
+}
+
+.ProcessAtlas .AtlasOnboardingSteps {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+	margin-top: 22px;
+}
+
+.ProcessAtlas .AtlasOnboardingStep {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	padding: 12px;
+	border: 1px solid var(--pw-border-color);
+}
+
+.ProcessAtlas .AtlasOnboardingStep-marker {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--pw-border-color);
+	color: var(--pw-muted-color);
+	font-size: .78rem;
+	font-weight: 700;
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasOnboardingStep.is-current {
+	border-color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasOnboardingStep.is-current .AtlasOnboardingStep-marker,
+.ProcessAtlas .AtlasOnboardingStep.is-complete .AtlasOnboardingStep-marker {
+	border-color: var(--pw-main-color);
+	color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasOnboardingStep strong,
+.ProcessAtlas .AtlasOnboardingStep small {
+	display: block;
+}
+
+.ProcessAtlas .AtlasOnboardingStep small {
+	margin-top: 2px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasSearchError {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	margin: 20px 0;
+}
+
+.ProcessAtlas .AtlasSearchError-icon {
+	font-size: 1.3rem;
+}
+
+.ProcessAtlas .AtlasSearchError h3,
+.ProcessAtlas .AtlasSearchError p {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasSearchError p {
+	margin-top: 4px;
+}
+
+.ProcessAtlas .AtlasSearchError details {
+	margin-top: 12px;
+}
+
+.ProcessAtlas .AtlasSearchError code {
+	display: block;
+	margin-top: 6px;
+	white-space: normal;
+	word-break: break-word;
+}
+
+.ProcessAtlas .AtlasCollectionHero {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+.ProcessAtlas .AtlasCollectionHero-main {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-width: 0;
+}
+
+.ProcessAtlas .AtlasCollectionHero-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	border-right: 1px solid var(--pw-border-color);
+	font-size: 1.15rem;
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasEyebrow {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+.ProcessAtlas .AtlasCollectionHero p {
+	margin: 0 0 7px;
+}
+
+.ProcessAtlas .AtlasHealth {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	color: var(--pw-main-color);
+	font-size: .78rem;
+	font-weight: 650;
+}
+
+.ProcessAtlas .AtlasHealth.is-warning {
+	color: var(--pw-error-inline-text-color);
+}
+
+.ProcessAtlas .AtlasCollectionOverview {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(22rem, .75fr);
+	gap: 20px;
+	margin: 0 0 24px;
+}
+
+.ProcessAtlas .AtlasStats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+}
+
+.ProcessAtlas .AtlasStat {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	padding: 8px;
+}
+
+.ProcessAtlas .AtlasStat-icon {
+	width: 28px;
+	font-size: 1rem;
+	text-align: center;
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasStats span,
+.ProcessAtlas .AtlasStats strong {
+	display: block;
+}
+
+.ProcessAtlas .AtlasStats span,
+.ProcessAtlas .AtlasTechnical dt {
+	color: var(--pw-muted-color);
+	font-size: .75rem;
+	letter-spacing: .03em;
+	text-transform: uppercase;
+}
+
+.ProcessAtlas .AtlasStats strong {
+	margin-top: 3px;
+	font-size: 1.05rem;
+	overflow-wrap: anywhere;
+}
+
+.ProcessAtlas .AtlasTechnical {
+	display: grid;
+	grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(0, .65fr));
+	gap: 14px;
+	margin: 0;
+	padding-left: 20px;
+	border-left: 1px solid var(--pw-border-color);
+}
+
+.ProcessAtlas .AtlasTechnical div {
+	min-width: 0;
+}
+
+.ProcessAtlas .AtlasTechnical dd {
+	margin: 4px 0 0;
+	font-weight: 600;
+	overflow-wrap: anywhere;
+}
+
+.ProcessAtlas .AtlasWarning,
+.ProcessAtlas .AtlasCallout {
+	margin: 16px 0;
+}
+
+.ProcessAtlas .AtlasCallout {
+	gap: 12px;
+}
+
+.ProcessAtlas .AtlasCallout i {
+	font-size: 1.25rem;
+}
+
+.ProcessAtlas .AtlasCallout strong,
+.ProcessAtlas .AtlasCallout span {
+	display: block;
+}
+
+.ProcessAtlas .AtlasCallout span {
+	margin-top: 3px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasCollectionToolbar,
+.ProcessAtlas .AtlasEntriesHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.ProcessAtlas .AtlasCollectionToolbar {
+	margin: 20px 0 14px;
+}
+
+.ProcessAtlas .AtlasCollectionToolbar p {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasCollectionGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.ProcessAtlas .AtlasCollectionCard {
+	display: flex;
+	align-items: stretch;
+	min-width: 0;
+}
+
+.ProcessAtlas .AtlasCollectionMain {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	padding: 16px;
+	color: var(--pw-text-color);
+	text-decoration: none;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasCollectionMain:hover {
+	color: var(--pw-text-color);
+	text-decoration: none;
+}
+
+.ProcessAtlas .AtlasCollectionCard a,
+.ProcessAtlas .AtlasCollectionCard a:hover,
+.ProcessAtlas .AtlasCollectionCard a:focus,
+.ProcessAtlas .AtlasCollectionCard a:active,
+.ProcessAtlas .AtlasCollectionCard a * {
+	border-bottom: 0 !important;
+	text-decoration: none !important;
+}
+
+.ProcessAtlas .AtlasCollectionMain > span:nth-child(2) {
+	min-width: 0;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasCollectionMain strong,
+.ProcessAtlas .AtlasCollectionMain small {
+	display: block;
+}
+
+.ProcessAtlas .AtlasCollectionMain strong {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ProcessAtlas .AtlasCollectionMain small {
+	margin-top: 4px;
+}
+
+.ProcessAtlas .AtlasCollectionMain > i {
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasCollectionIcon {
+	width: 28px;
+	font-size: 1rem;
+	text-align: center;
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasCollectionActions {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 12px;
+	border-left: 1px solid var(--pw-border-color);
+}
+
+.ProcessAtlas .AtlasIconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--pw-muted-color);
+	cursor: pointer;
+}
+
+.ProcessAtlas .AtlasIconButton:hover,
+.ProcessAtlas .AtlasIconButton:focus {
+	border-color: var(--pw-border-color);
+	color: var(--pw-text-color);
+}
+
+.ProcessAtlas .AtlasDangerButton:hover,
+.ProcessAtlas .AtlasDangerButton:focus {
+	color: var(--pw-error-inline-text-color);
+}
+
+.ProcessAtlas .AtlasEntriesHead {
+	margin: 28px 0 14px;
+}
+
+.ProcessAtlas .AtlasEntriesHead h3 {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasEntriesHead h3 span {
+	padding: 3px 8px;
+	background: var(--pw-muted-background);
+	color: var(--pw-muted-color);
+	font-size: .75rem;
+	font-weight: 600;
+}
+
+.ProcessAtlas .AtlasEntryList {
+	display: grid;
+	gap: 8px;
+}
+
+.ProcessAtlas .AtlasEntry {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 16px 18px;
+	border-left: 3px solid var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasEntry:focus-within {
+	border-color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasEntry-main {
+	min-width: 0;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasEntry-top {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 8px 0 0 34px;
+	color: var(--pw-muted-color);
+	font-size: .78rem;
+	flex-wrap: wrap;
+}
+
+.ProcessAtlas .AtlasEntry-heading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ProcessAtlas .AtlasEntry-heading time {
+	margin-left: auto;
+	color: var(--pw-muted-color);
+	font-size: .75rem;
+	white-space: nowrap;
+}
+
+.ProcessAtlas .AtlasEntry-index {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	background: var(--pw-muted-background);
+	color: var(--pw-muted-color);
+	font-size: .72rem;
+	font-weight: 700;
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasEntry-kind {
+	padding: 2px 6px;
+	background: var(--pw-main-color);
+	color: var(--pw-blocks-background);
+	font-size: .68rem;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+
+.ProcessAtlas .AtlasEntry-quality {
+	padding: 2px 7px;
+	border: 1px solid var(--pw-border-color);
+	color: var(--pw-muted-color);
+	font-size: .68rem;
+	font-weight: 650;
+}
+
+.ProcessAtlas .AtlasEntry.is-short {
+	border-left-color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasEntry h4 {
+	min-width: 0;
+	margin: 0;
+	font-size: 1.04rem;
+	line-height: 1.35;
+	flex: 1;
+}
+
+.ProcessAtlas .AtlasEntry-titleLink {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 7px;
+}
+
+.ProcessAtlas .AtlasEntry-titleLink i {
+	font-size: .7rem;
+}
+
+.ProcessAtlas .AtlasEntry .AtlasDetails summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 6px 9px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-inputs-background);
+	color: var(--pw-muted-color);
+	font-size: .82rem;
+}
+
+.ProcessAtlas .AtlasEntry .AtlasDetails summary span {
+	font-size: .75rem;
+}
+
+.ProcessAtlas .AtlasEntry .AtlasDetails > pre {
+	max-width: none;
+	margin: 8px 0 2px;
+	padding: 14px;
+	border: 1px solid var(--pw-border-color);
+	border-left: 3px solid var(--pw-main-color);
+	background: var(--pw-main-background);
+	color: var(--pw-text-color);
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	font-size: .78rem;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.ProcessAtlas .AtlasEntry-foot {
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+	min-height: 22px;
+	margin: 12px 0 0 34px;
+	color: var(--pw-muted-color);
+	font-size: .75rem;
+	flex-wrap: wrap;
+}
+
+.ProcessAtlas .AtlasEntry-foot > span {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.ProcessAtlas .AtlasEntry-foot .AtlasMeta {
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasEntry-foot .AtlasMeta summary {
+	display: inline-flex;
+	align-items: center;
+	min-height: 19px;
+	padding: 6px 9px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-inputs-background);
+}
+
+.ProcessAtlas .AtlasEntry-foot .AtlasMeta pre {
+	max-width: none;
+	margin-top: 8px;
+}
+
+.ProcessAtlas .AtlasEntry-foot .AtlasDetails[open],
+.ProcessAtlas .AtlasEntry-foot .AtlasMeta[open] {
+	flex: 1 0 100%;
+}
+
+.ProcessAtlas .AtlasEntry-actions {
+	flex: 0 0 auto;
+}
+
+.ProcessAtlas .AtlasCollectionCard[hidden],
+.ProcessAtlas .AtlasEntry[hidden] {
+	display: none !important;
+}
+
+.ProcessAtlas .AtlasFilter {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: min(100%, 28rem);
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasFilter > i {
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasFilter input {
+	width: 100%;
+}
+
+.ProcessAtlas .AtlasEntryFilter {
+	max-width: 24rem;
+}
+
+.ProcessAtlas .AtlasFilterEmpty {
+	padding: 24px;
+	color: var(--pw-muted-color);
+	text-align: center;
+}
+
+.ProcessAtlas .AtlasSrOnly {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.ProcessAtlas .AtlasDetails summary {
+	cursor: pointer;
+	outline: none;
+}
+
+.ProcessAtlas .AtlasDetails > div {
+	max-width: 46rem;
+	margin: 7px 0;
+	white-space: pre-wrap;
+}
+
+.ProcessAtlas .AtlasDetails .detail {
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasRef {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.ProcessAtlas .AtlasCopy {
+	padding: 3px 5px;
+	border: 0;
+	background: transparent;
+	color: var(--pw-muted-color);
+	cursor: pointer;
+}
+
+.ProcessAtlas .AtlasCopy:hover,
+.ProcessAtlas .AtlasCopy:focus,
+.ProcessAtlas .AtlasCopy.is-copied {
+	color: var(--pw-main-color);
+}
+
+.ProcessAtlas .AtlasCopy.is-copied i::before {
+	content: "\f00c";
+}
+
+.ProcessAtlas .AtlasMeta {
+	margin-top: 7px;
+	font-size: .82rem;
+}
+
+.ProcessAtlas .AtlasMeta summary {
+	color: var(--pw-muted-color);
+	cursor: pointer;
+}
+
+.ProcessAtlas .AtlasMeta pre {
+	max-width: 44rem;
+	margin: 7px 0 0;
+	padding: 10px;
+	overflow: auto;
+	background: var(--pw-code-background);
+	color: var(--pw-code-color);
+	font-size: .78rem;
+	white-space: pre-wrap;
+}
+
+.ProcessAtlas .AtlasInlineForm {
+	display: inline-block;
+	margin: 0;
+}
+
+.ProcessAtlas .AtlasPagination {
+	margin-top: 20px;
+}
+
+.ProcessAtlas .AtlasTable {
+	padding: 0 20px;
+	border: 1px solid var(--pw-border-color);
+	background: var(--pw-blocks-background);
+}
+
+.ProcessAtlas .AtlasTable table {
+	min-width: 680px;
+	margin-bottom: 0;
+}
+
+.ProcessAtlas .AtlasSearchPanel .Inputfields,
+.ProcessAtlas .AtlasReindexForm .Inputfields,
+.ProcessAtlas .AtlasAddPanel .Inputfields {
+	margin-bottom: 0;
+}
+
+.ProcessAtlas .AtlasResults {
+	margin-top: 24px;
+}
+
+.ProcessAtlas .AtlasScore {
+	color: var(--pw-main-color);
+	font-weight: 700;
+}
+
+.ProcessAtlas .AtlasJob {
+	max-width: 48rem;
+}
+
+.ProcessAtlas .AtlasJob-head,
+.ProcessAtlas .AtlasJob-foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.ProcessAtlas .AtlasJob-head {
+	justify-content: flex-start;
+}
+
+.ProcessAtlas .AtlasJob-icon {
+	width: 36px;
+	font-size: 1.15rem;
+	text-align: center;
+}
+
+.ProcessAtlas .AtlasJob-head strong,
+.ProcessAtlas .AtlasJob-head small {
+	display: block;
+}
+
+.ProcessAtlas .AtlasJob-head small {
+	margin-top: 3px;
+	color: var(--pw-muted-color);
+}
+
+.ProcessAtlas .AtlasJob progress {
+	display: block;
+	width: 100%;
+	margin: 20px 0 10px;
+}
+
+.ProcessAtlas .AtlasJob-foot > span {
+	font-weight: 700;
+}
+
+.ProcessAtlas .AtlasJob.is-error {
+	background: var(--pw-alert-danger);
+}
+
+.ProcessAtlas .AtlasJob.is-error .AtlasJob-icon {
+	color: var(--pw-error-inline-text-color);
+}
+
+.ProcessAtlas .AtlasJob-errorDetail {
+	display: block;
+	margin-top: 7px;
+	white-space: normal;
+	word-break: break-word;
+}
+
+.ProcessAtlas .AtlasJob-retry {
+	display: inline-block;
+	margin-top: 16px;
+}
+
+.ProcessAtlas .AtlasBatchForm {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	.ProcessAtlas .AtlasSection-head,
+	.ProcessAtlas .AtlasOverviewHero,
+	.ProcessAtlas .AtlasCollectionHero {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.ProcessAtlas .AtlasDashboardGrid {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasOnboardingSteps {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasCollectionOverview {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasTechnical {
+		padding: 16px 0 0;
+		border-top: 1px solid var(--pw-border-color);
+		border-left: 0;
+	}
+
+	.ProcessAtlas .AtlasCollectionGrid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 959px) {
+	.ProcessAtlas .AtlasMetrics {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 639px) {
+	.ProcessAtlas .AtlasNavRow {
+		align-items: stretch;
+		flex-direction: column-reverse;
+	}
+
+	.ProcessAtlas .AtlasNav {
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	.ProcessAtlas .AtlasStatus {
+		align-self: flex-start;
+	}
+
+	.ProcessAtlas .AtlasActions,
+	.ProcessAtlas .AtlasActions .uk-button {
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.ProcessAtlas .AtlasMetrics,
+	.ProcessAtlas .AtlasQuickActions {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasOverviewEmpty {
+		grid-template-columns: 1fr;
+		padding: 22px;
+	}
+
+	.ProcessAtlas .AtlasDistributionMain {
+		grid-template-columns: 1fr;
+		gap: 7px;
+	}
+
+	.ProcessAtlas .AtlasCollectionToolbar,
+	.ProcessAtlas .AtlasEntriesHead {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.ProcessAtlas .AtlasFilter,
+	.ProcessAtlas .AtlasEntryFilter {
+		max-width: none;
+		width: 100%;
+	}
+
+	.ProcessAtlas .AtlasStats {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasTechnical {
+		grid-template-columns: 1fr;
+	}
+
+	.ProcessAtlas .AtlasCollectionCard {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.ProcessAtlas .AtlasCollectionActions {
+		border-top: 1px solid var(--pw-border-color);
+		border-left: 0;
+	}
+
+	.ProcessAtlas .AtlasCollectionActions .uk-button {
+		flex: 1;
+	}
+
+	.ProcessAtlas .AtlasEntry {
+		gap: 8px;
+		padding: 14px;
+	}
+
+	.ProcessAtlas .AtlasEntry-heading {
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
+	.ProcessAtlas .AtlasEntry-heading time {
+		width: 100%;
+		margin-left: 34px;
+	}
+
+	.ProcessAtlas .AtlasEntry-top,
+	.ProcessAtlas .AtlasEntry-foot {
+		margin-left: 34px;
+	}
+
+	.ProcessAtlas .AtlasTable {
+		padding: 0 12px;
+	}
+}

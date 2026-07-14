@@ -1,0 +1,27 @@
+# Changelog
+
+All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
+
+## [1.0.0] — 2026-07-13 · first public release
+
+### Added
+
+- Lightweight ProcessWire RAG store backed by one MySQL/MariaDB table, with embeddings supplied through Squad.
+- Public APIs for adding, batching, chunking, searching, deleting and inspecting entries and collections.
+- Cosine similarity retrieval, metadata filters, literal keyword boosting and optional Maximal Marginal Relevance diversification.
+- Paragraph- and sentence-aware document chunking with chunk metadata and chunk-aware deletion.
+- Transactional batch writes and atomic document or full-collection replacement that preserve previous data when embedding fails.
+- Collection model and vector-dimension consistency checks, bounded streaming retrieval and deterministic ranking.
+- Setup → Atlas admin workspace with Overview, Collections, Search and Reindex screens.
+- Resumable batched reindexing with progress, cancellation, capped retries, staging promotion and incremental reuse of unchanged vectors through `$page->meta()`.
+- Domain-neutral ProcessWire page extraction for common core fields, Page references, Images/Files and ProFields Table, Combo, Textareas, Multiplier, Repeater and Repeater Matrix.
+- Structured labelled Content, absolute media URLs, source metadata, hierarchy context for short pages and filtering of presentation/system internals.
+- Hookable field and document projections, external staging contributions, and successful-index notifications for integrations that extend Atlas without patching it.
+- Dedicated `atlas-admin` permission, CSRF-protected mutations, identifier validation and protected internal staging namespaces.
+- Installation, API, integration and AI-agent documentation with dependency-free smoke tests.
+
+### Requirements
+
+- ProcessWire 3.0.200 or newer.
+- Squad with an embedding-capable provider configured.
+- MySQL or MariaDB with InnoDB and `utf8mb4` support.
