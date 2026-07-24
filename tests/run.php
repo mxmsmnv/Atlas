@@ -198,8 +198,9 @@ class TestSession {
 class TestPages {
 	public $pages = [];
 	public $findResult = [];
+	public $lastSelector = '';
 	public function get($id) { return $this->pages[$id] ?? new Page(0, ''); }
-	public function find($selector) { return $this->findResult; }
+	public function find($selector) { $this->lastSelector = $selector; return $this->findResult; }
 }
 class TestSanitizer {
 	public function entities($value) { return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8'); }
@@ -369,7 +370,7 @@ function check(bool $condition, string $message): void {
 check(is_string(json_encode(['detail' => "\xB1"], JSON_INVALID_UTF8_SUBSTITUTE)), 'invalid UTF-8 diagnostics remain JSON-encodable');
 $atlasInfo = Atlas::getModuleInfo();
 $processInfo = ProcessAtlas::getModuleInfo();
-check(($atlasInfo['version'] ?? null) === 100 && ($processInfo['version'] ?? null) === 100, 'public module versions are synchronized at ProcessWire version 100 / SemVer 1.0.0');
+check(($atlasInfo['version'] ?? null) === 110 && ($processInfo['version'] ?? null) === 110, 'public module versions are synchronized at ProcessWire version 110 / SemVer 1.1.0');
 check(($processInfo['permission'] ?? '') === 'atlas-admin' && isset($processInfo['permissions']['atlas-admin']), 'admin module declares a dedicated permission');
 
 $store = new AtlasStore();
@@ -570,8 +571,10 @@ $process->start($addAtlas, $reindexInput);
 check($reindexSession->get('AtlasReindexJob') === null, 'empty selector does not create reindex job');
 check(strpos($process->notices[count($process->notices) - 1][1], 'current collection was not changed') !== false, 'empty selector reports safe failure');
 $reindexPages->findResult = [new Page(7, 'Indexed')];
+$reindexInput->values['max_pages'] = 7500;
 $process->start($addAtlas, $reindexInput);
 check($reindexSession->get('AtlasReindexJob')['page_ids'] === [7], 'matching selector creates reindex job');
+check(strpos($reindexPages->lastSelector, 'limit=7500') !== false, 'reviewed reindex page bound is applied');
 $activeJob = $reindexSession->get('AtlasReindexJob');
 check(!empty($activeJob['token']), 'reindex job receives an identity token');
 $staleAtlas = new TestBatchAtlas();
@@ -769,6 +772,7 @@ check(strpos($adminScript, "batchForm.getAttribute('action')") !== false, 'reind
 check(strpos($adminScript, 'fetch(batchForm.action') === false, 'reindex does not use the shadowable form action property');
 $adminModule = file_get_contents(__DIR__ . '/../ProcessAtlas.module.php');
 check(strpos($adminModule, 'filemtime($assetsPath') !== false, 'admin assets are cache-busted after updates');
+check(ProcessAtlas::DEFAULT_REINDEX_PAGES === 1000 && ProcessAtlas::MAX_REINDEX_PAGES === 10000, 'reindex page bounds remain explicit and safe');
 check(strpos($adminModule, 'class="uk-tab AtlasNav"') !== false, 'admin primary navigation uses the native UIkit tab pattern');
 check(strpos($adminModule, 'ProcessAtlas AtlasWorkspace pw-module-workspace') !== false, 'admin output uses the canonical scoped module workspace');
 $adminTraits = class_uses(ProcessAtlas::class);

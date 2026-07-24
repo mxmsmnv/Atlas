@@ -28,11 +28,13 @@ class ProcessAtlas extends Process {
 	const ADD_DRAFT_KEY = 'AtlasAddEntryDraft';
 	const PAGE_META_KEY = 'atlas_index';
 	const MAX_MANUAL_TEXT = 100000;
+	const DEFAULT_REINDEX_PAGES = 1000;
+	const MAX_REINDEX_PAGES = 10000;
 
 	public static function getModuleInfo() {
 		return [
 			'title'    => 'Atlas',
-			'version'  => 100,
+			'version'  => 110,
 			'summary'  => 'Browse, search and maintain the Atlas RAG store.',
 			'author'   => 'Maxim Semenov',
 			'icon'     => 'database',

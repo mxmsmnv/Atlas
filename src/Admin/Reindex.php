@@ -20,7 +20,7 @@ trait ProcessAtlasReindex {
 		if (!$atlas->isReady()) return '<section class="AtlasSection"><div class="AtlasSection-head"><div><p>' . $this->_('Build a searchable knowledge base from site pages.') . '</p></div></div>'
 			. $this->emptyState('plug', $this->_('Embedding provider required'), $this->_('Configure an embedding provider in Squad before starting a reindex.')) . '</section>';
 		$matchingPageCount = $this->wire('pages')->count(self::SITE_SELECTOR);
-		$pageCount = min(1000, $matchingPageCount);
+		$pageCount = min(self::DEFAULT_REINDEX_PAGES, $matchingPageCount);
 
 		$form = $this->wire('modules')->get('InputfieldForm');
 		$form->attr('method', 'post');
@@ -31,7 +31,7 @@ trait ProcessAtlasReindex {
 		$set = $this->wire('modules')->get('InputfieldFieldset');
 		$set->label = $this->_('Build a knowledge base from this site');
 		$set->icon = 'database';
-		$countMessage = $matchingPageCount > 1000
+		$countMessage = $matchingPageCount > self::DEFAULT_REINDEX_PAGES
 			? sprintf($this->_('The first %1$d of %2$d matching pages will be embedded'), $pageCount, $matchingPageCount)
 			: sprintf($this->_n('About %d page will be embedded', 'About %d pages will be embedded', $pageCount), $pageCount);
 		$set->description = $this->_('Index every public page (title + text), split into chunks, into one collection — ready for search and RAG.') . ' ' . $countMessage . '; ' . $this->_('this calls the embedding API.');
@@ -43,15 +43,22 @@ trait ProcessAtlasReindex {
 		$f = $this->wire('modules')->get('InputfieldText');
 		$f->attr('name', 'collection'); $f->attr('value', 'site');
 		$f->attr('maxlength', 128);
-		$f->label = $this->_('Collection'); $f->columnWidth = 40;
+		$f->label = $this->_('Collection'); $f->columnWidth = 30;
 		$f->notes = $this->_('New or existing. Use “olivia_site” to feed Olivia’s Operate audit.');
+		$set->add($f);
+
+		$f = $this->wire('modules')->get('InputfieldInteger');
+		$f->attr('name', 'max_pages'); $f->attr('value', self::DEFAULT_REINDEX_PAGES);
+		$f->attr('min', 1); $f->attr('max', self::MAX_REINDEX_PAGES);
+		$f->label = $this->_('Maximum pages'); $f->columnWidth = 20;
+		$f->notes = sprintf($this->_('Safety limit for this collection (maximum %d).'), self::MAX_REINDEX_PAGES);
 		$set->add($f);
 
 		$f = $this->wire('modules')->get('InputfieldText');
 		$f->attr('name', 'selector'); $f->attr('value', self::SITE_SELECTOR);
 		$f->attr('maxlength', 1000);
-		$f->label = $this->_('Pages (advanced)'); $f->columnWidth = 60; $f->collapsed = Inputfield::collapsedYes;
-		$f->notes = $this->_('ProcessWire selector — which pages to include (max 1000).');
+		$f->label = $this->_('Pages (advanced)'); $f->columnWidth = 50; $f->collapsed = Inputfield::collapsedYes;
+		$f->notes = $this->_('ProcessWire selector — which public pages to include. Keep each collection focused and below the configured maximum.');
 		$set->add($f);
 
 		$s = $this->wire('modules')->get('InputfieldSubmit');
@@ -101,7 +108,8 @@ trait ProcessAtlasReindex {
 		$selector = trim((string) $input->post('selector'));
 		if (mb_strlen($selector) > 1000) { $this->error($this->_('Page selectors are limited to 1,000 characters.')); return; }
 		if ($selector === '') $selector = self::SITE_SELECTOR;
-		try { $pages = $this->wire('pages')->find($selector . ', limit=1000'); }
+		$maxPages = max(1, min(self::MAX_REINDEX_PAGES, (int) $input->post('max_pages') ?: self::DEFAULT_REINDEX_PAGES));
+		try { $pages = $this->wire('pages')->find($selector . ', limit=' . $maxPages); }
 		catch (\Throwable $e) { $this->error($this->_('Invalid page selector.')); return; }
 		$ids = [];
 		foreach ($pages as $page) $ids[] = (int)$page->id;

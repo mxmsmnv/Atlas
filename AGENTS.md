@@ -199,7 +199,7 @@ Every integration must define:
 - how test collections are removed;
 - whether a previous live collection must remain available during rebuild.
 
-Prefer the ProcessAtlas atomic reindex flow for full-site replacement. It builds an internal staging collection and promotes it only after all batches succeed. The admin reindex is intentionally limited to the first 1,000 selector matches; design another reviewed batching strategy when a project exceeds that boundary.
+Prefer the ProcessAtlas atomic reindex flow for full-site replacement. It builds an internal staging collection and promotes it only after all batches succeed. The admin reindex defaults to the first 1,000 selector matches and allows an administrator to raise a reviewed job to at most 10,000 pages. Use a focused selector and design another reviewed storage or batching strategy when a project exceeds that boundary.
 
 ## Public application API
 

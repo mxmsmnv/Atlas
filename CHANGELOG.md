@@ -2,6 +2,17 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-07-23
+
+### Added
+
+- A per-reindex maximum-pages control, bounded between 1 and 10,000 pages.
+
+### Changed
+
+- Kept the safe default at 1,000 pages while allowing reviewed, focused collections to grow beyond that boundary.
+- Clarified that large sites should exclude presentation/media records and keep each lightweight Atlas collection intentionally scoped.
+
 ## [1.0.0] — 2026-07-13 · first public release
 
 ### Added
