@@ -370,7 +370,7 @@ function check(bool $condition, string $message): void {
 check(is_string(json_encode(['detail' => "\xB1"], JSON_INVALID_UTF8_SUBSTITUTE)), 'invalid UTF-8 diagnostics remain JSON-encodable');
 $atlasInfo = Atlas::getModuleInfo();
 $processInfo = ProcessAtlas::getModuleInfo();
-check(($atlasInfo['version'] ?? null) === 110 && ($processInfo['version'] ?? null) === 110, 'public module versions are synchronized at ProcessWire version 110 / SemVer 1.1.0');
+check(($atlasInfo['version'] ?? null) === 111 && ($processInfo['version'] ?? null) === 111, 'public module versions are synchronized at ProcessWire version 111 / SemVer 1.1.1');
 check(($processInfo['permission'] ?? '') === 'atlas-admin' && isset($processInfo['permissions']['atlas-admin']), 'admin module declares a dedicated permission');
 
 $store = new AtlasStore();
@@ -784,5 +784,7 @@ check(strpos($adminCss, '.ProcessAtlas ') !== false, 'admin custom CSS is scoped
 check(strpos($adminCss, '--pw-primary-color') === false && strpos($adminCss, '--pw-content-background') === false, 'admin CSS uses current ProcessWire design tokens only');
 check(strpos($adminCss, 'gradient') === false && strpos($adminCss, 'box-shadow') === false, 'admin CSS avoids decorative gradients and shadows');
 check(strpos($adminCss, '.AtlasEntry-quality') !== false && strpos($adminCss, 'white-space: pre-wrap') !== false, 'collection entries expose source quality and preserve field structure');
+$storeSource = file_get_contents(__DIR__ . '/../AtlasStore.php');
+check(strpos($storeSource, 'MYSQL_ATTR_USE_BUFFERED_QUERY') !== false && strpos($storeSource, 'closeCursor()') !== false, 'large collection search disables PDO buffering and closes the cursor');
 
 echo "Atlas smoke tests passed\n";

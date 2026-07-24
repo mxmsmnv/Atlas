@@ -2,6 +2,13 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] — 2026-07-23
+
+### Fixed
+
+- Streamed vector rows from MySQL without PDO buffering the full collection in memory, allowing reviewed multi-thousand-entry collections to remain within normal PHP memory limits.
+- Restored the connection's buffered-query mode after every search, including failure paths.
+
 ## [1.1.0] — 2026-07-23
 
 ### Added

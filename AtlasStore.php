@@ -159,9 +159,22 @@ class AtlasStore extends Wire {
 		$topK           = max(1, $topK);
 		$poolLimit      = $mmr ? max($topK * 6, 30) : $topK;
 		$pruneAt        = max($poolLimit * 4, 32);
+		$db             = $this->wire('database');
+		$bufferedOption = class_exists('\Pdo\Mysql') && defined('Pdo\Mysql::ATTR_USE_BUFFERED_QUERY')
+			? constant('Pdo\Mysql::ATTR_USE_BUFFERED_QUERY')
+			: (defined('PDO::MYSQL_ATTR_USE_BUFFERED_QUERY')
+				? constant('PDO::MYSQL_ATTR_USE_BUFFERED_QUERY')
+				: null);
+		$unbuffered = false;
+		$stmt = null;
 
 		try {
-			$stmt = $this->wire('database')->prepare(
+			if($bufferedOption !== null && method_exists($db, 'setAttribute')) {
+				try {
+					$unbuffered = $db->setAttribute($bufferedOption, false);
+				} catch (\Throwable $ignored) {}
+			}
+			$stmt = $db->prepare(
 				"SELECT `ref`,`text`,`meta`,`model`,`vector` FROM `" . self::TABLE . "` WHERE `collection` = ?"
 			);
 			$stmt->execute([$collection]);
@@ -213,6 +226,13 @@ class AtlasStore extends Wire {
 		} catch (\Throwable $e) {
 			$this->logError('nearest', $e);
 			return [];
+		} finally {
+			if($stmt) {
+				try { $stmt->closeCursor(); } catch (\Throwable $ignored) {}
+			}
+			if($unbuffered) {
+				try { $db->setAttribute($bufferedOption, true); } catch (\Throwable $ignored) {}
+			}
 		}
 	}
 
