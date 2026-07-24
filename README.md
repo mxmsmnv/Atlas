@@ -1,6 +1,6 @@
 # Atlas
 
-Atlas adds a lightweight retrieval-augmented generation (RAG) store to ProcessWire: it embeds text, keeps vectors in MySQL and returns the most relevant entries for a query.
+Atlas adds a lightweight retrieval-augmented generation (RAG) store to ProcessWire: it embeds text, keeps vectors in MySQL and returns the most relevant entries for a query. A local `lexicalSearch()` first pass is also available for latency-sensitive integrations that only need semantic retrieval when literal matches are weak.
 
 ![Atlas](assets/Atlas.png)
 

@@ -20,7 +20,7 @@ class Atlas extends WireData implements Module {
 	public static function getModuleInfo() {
 		return [
 			'title'    => 'Atlas',
-			'version'  => 111,
+			'version'  => 120,
 			'summary'  => __('Lightweight RAG store: embed text via Squad and retrieve by similarity.'),
 			'author'   => 'Maxim Semenov',
 			'icon'     => 'search',
@@ -188,6 +188,30 @@ class Atlas extends WireData implements Module {
 		$rerank['model'] = (string)($res['model'] ?? '');
 		$hits = $this->store()->nearest($collection, $vec, $topK, $rerank);
 		if (!$hits && $this->store()->lastError() !== '') $this->fail('Atlas search: ' . $this->store()->lastError());
+		return $hits;
+	}
+
+	/**
+	 * Retrieve locally by significant query terms without an embedding request.
+	 *
+	 * Use as a fast first pass and fall back to search() when no result clears
+	 * the requested minimum score.
+	 */
+	public function lexicalSearch(string $collection, string $query, int $topK = 5, array $opts = []): array {
+		$this->lastError = '';
+		if (!$this->validCollection($collection)) {
+			$this->fail('Atlas lexical search: collection is required and limited to 128 characters');
+			return [];
+		}
+		$query = trim($query);
+		if ($query === '') return [];
+		$hits = $this->store()->lexical($collection, $query, $topK, [
+			'filter' => (array)($opts['filter'] ?? []),
+			'minScore' => $opts['minScore'] ?? 0.42,
+		]);
+		if (!$hits && $this->store()->lastError() !== '') {
+			$this->fail('Atlas lexical search: ' . $this->store()->lastError());
+		}
 		return $hits;
 	}
 

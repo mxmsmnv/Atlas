@@ -236,6 +236,114 @@ class AtlasStore extends Wire {
 		}
 	}
 
+	/**
+	 * Retrieve entries using local lexical relevance only.
+	 *
+	 * This avoids an external embedding request and is useful as a low-latency
+	 * first pass before semantic search. Scores are normalized to 0..1.
+	 */
+	public function lexical(string $collection, string $query, int $topK = 5, array $opts = []): array {
+		$this->lastError = '';
+		$tokens = $this->lexicalTokens($query);
+		if (!$tokens) return [];
+
+		$filter = (array)($opts['filter'] ?? []);
+		$minimumScore = max(0.0, min(1.0, (float)($opts['minScore'] ?? 0.42)));
+		$topK = max(1, $topK);
+		$db = $this->wire('database');
+		$bufferedOption = class_exists('\Pdo\Mysql') && defined('Pdo\Mysql::ATTR_USE_BUFFERED_QUERY')
+			? constant('Pdo\Mysql::ATTR_USE_BUFFERED_QUERY')
+			: (defined('PDO::MYSQL_ATTR_USE_BUFFERED_QUERY')
+				? constant('PDO::MYSQL_ATTR_USE_BUFFERED_QUERY')
+				: null);
+		$unbuffered = false;
+		$stmt = null;
+
+		try {
+			if($bufferedOption !== null && method_exists($db, 'setAttribute')) {
+				try {
+					$unbuffered = $db->setAttribute($bufferedOption, false);
+				} catch (\Throwable $ignored) {}
+			}
+			$stmt = $db->prepare(
+				"SELECT `ref`,`text`,`meta`,`model` FROM `" . self::TABLE . "` WHERE `collection` = ?"
+			);
+			$stmt->execute([$collection]);
+			$candidates = [];
+			while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+				$meta = json_decode((string)$row['meta'], true) ?: [];
+				if ($filter && !$this->matchesFilter($meta, $filter)) continue;
+				$title = trim((string)($meta['title'] ?? $meta['name'] ?? ''));
+				$score = $this->lexicalScore((string)$row['text'], $title, $tokens);
+				if ($score < $minimumScore) continue;
+				$candidates[] = [
+					'ref' => (string)$row['ref'],
+					'text' => (string)$row['text'],
+					'meta' => $meta,
+					'model' => (string)$row['model'],
+					'score' => $score,
+				];
+				if (count($candidates) >= max($topK * 8, 40)) {
+					$candidates = $this->topCandidates($candidates, max($topK * 3, 15));
+				}
+			}
+			return $this->topCandidates($candidates, $topK);
+		} catch (\Throwable $e) {
+			$this->logError('lexical', $e);
+			return [];
+		} finally {
+			if($stmt) {
+				try { $stmt->closeCursor(); } catch (\Throwable $ignored) {}
+			}
+			if($unbuffered) {
+				try { $db->setAttribute($bufferedOption, true); } catch (\Throwable $ignored) {}
+			}
+		}
+	}
+
+	/** Significant, language-tolerant tokens used by local lexical retrieval. */
+	protected function lexicalTokens(string $query): array {
+		$query = mb_strtolower(mb_substr(trim($query), 0, 2000));
+		$parts = preg_split('/[^\p{L}\p{N}]+/u', $query, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+		$stop = array_flip([
+			'the', 'and', 'for', 'with', 'from', 'about', 'what', 'which', 'who', 'where',
+			'when', 'why', 'how', 'tell', 'show', 'please', 'can', 'could', 'would', 'should',
+			'are', 'was', 'were', 'does', 'did', 'you', 'your', 'me', 'my', 'this', 'that',
+			'что', 'какой', 'какая', 'какие', 'кто', 'где', 'когда', 'почему', 'как', 'это',
+			'расскажи', 'покажи', 'пожалуйста', 'можно', 'мне', 'мой', 'моя', 'про', 'для',
+			'или', 'есть',
+		]);
+		$tokens = [];
+		foreach($parts as $part) {
+			if(mb_strlen($part) < 3 || isset($stop[$part])) continue;
+			$tokens[$part] = true;
+			if(count($tokens) >= 16) break;
+		}
+		return array_keys($tokens);
+	}
+
+	/** Score token coverage, title matches and an exact significant phrase. */
+	protected function lexicalScore(string $text, string $title, array $tokens): float {
+		if(!$tokens) return 0.0;
+		$text = mb_strtolower($text);
+		$title = mb_strtolower($title);
+		$matched = 0;
+		$titleMatched = 0;
+		foreach($tokens as $token) {
+			if(mb_stripos($text, $token) !== false || mb_stripos($title, $token) !== false) $matched++;
+			if($title !== '' && mb_stripos($title, $token) !== false) $titleMatched++;
+		}
+		if($matched === 0) return 0.0;
+		$count = count($tokens);
+		$phrase = implode(' ', $tokens);
+		$phraseMatch = count($tokens) > 1
+			&& (mb_stripos($text, $phrase) !== false || mb_stripos($title, $phrase) !== false);
+		$score = ($matched / $count) * 0.65
+			+ ($titleMatched / $count) * 0.25
+			+ ($phraseMatch ? 0.10 : 0.0);
+		return round(min(1.0, $score), 6);
+	}
+
 	/** Sort by relevance and retain only the candidates that can still be selected. */
 	protected function topCandidates(array $candidates, int $limit): array {
 		usort($candidates, function($a, $b) {

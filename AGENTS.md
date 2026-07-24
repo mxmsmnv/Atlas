@@ -221,6 +221,7 @@ Common calls:
 | `addChunked($collection, $ref, $text, $meta = [], $opts = [], $maxChars = 1500): int` | Atomically replace one chunked document | External embedding call and database transaction |
 | `chunkText($text, $maxChars = 1500): array` | Split text without storing it | None |
 | `search($collection, $query, $topK = 5, $opts = []): array` | Embed a query and retrieve ranked entries | External embedding call; reads collection rows |
+| `lexicalSearch($collection, $query, $topK = 5, $opts = []): array` | Retrieve by significant local terms before semantic fallback | Database read only |
 | `delete($collection, $ref): bool` | Delete one exact stored ref | Destructive database write |
 | `deleteRef($collection, $baseRef): bool` | Delete a base ref and all chunks | Destructive database write |
 | `clearCollection($collection): bool` | Remove an entire collection | Highly destructive database write |

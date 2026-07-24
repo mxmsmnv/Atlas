@@ -67,6 +67,12 @@ Aggregates: `['total', 'docs', 'dims', 'avg_chars', 'last_modified', 'models']`.
 ### chunkText(string $text, int $maxChars = 1500): array
 Public access to the chunker — split text into chunks without storing (useful to pre-chunk and batch many documents through one `addMany()`).
 
+### lexicalSearch(string $collection, string $query, int $topK = 5, array $opts = []): array
+Retrieve ranked entries using significant local query terms without calling the
+embedding provider. Use this as a low-latency first pass and fall back to
+`search()` when it returns no result. Supported options are `filter` and
+`minScore` (`0..1`, default `0.42`).
+
 ### delete(string $collection, string $ref): bool
 Delete one exact ref. Returns whether the database operation succeeded.
 
@@ -94,7 +100,7 @@ Remove every entry in a collection. Returns whether the database operation succe
 
 ## Result shape
 
-`search()` returns an array in ranking order (score descending without MMR; MMR selection order when diversification is enabled) of:
+`search()` and `lexicalSearch()` return an array in ranking order (score descending without MMR; MMR selection order when diversification is enabled) of:
 
 ```php
 [

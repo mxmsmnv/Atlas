@@ -2,6 +2,13 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-07-24
+
+### Added
+
+- Added `lexicalSearch()` as a low-latency local retrieval pass that avoids an external embedding request and returns normalized relevance scores.
+- Added filtering and a configurable minimum score to lexical retrieval so integrations can safely fall back to semantic `search()` when local matches are weak.
+
 ## [1.1.1] — 2026-07-23
 
 ### Fixed

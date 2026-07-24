@@ -144,6 +144,12 @@ class PutManySpyStore extends AtlasStore {
 	public $calls = 0;
 	public function putMany(string $collection, array $items): int { $this->calls++; return count($items); }
 }
+class LexicalTestStore extends AtlasStore {
+	public function tokens(string $query): array { return $this->lexicalTokens($query); }
+	public function score(string $text, string $title, array $tokens): float {
+		return $this->lexicalScore($text, $title, $tokens);
+	}
+}
 class BatchFacadeAtlas extends Atlas {
 	public function useStore(AtlasStore $store): void { $this->store = $store; }
 	protected function embed($input, array $opts, string $operation): ?array {
@@ -370,7 +376,7 @@ function check(bool $condition, string $message): void {
 check(is_string(json_encode(['detail' => "\xB1"], JSON_INVALID_UTF8_SUBSTITUTE)), 'invalid UTF-8 diagnostics remain JSON-encodable');
 $atlasInfo = Atlas::getModuleInfo();
 $processInfo = ProcessAtlas::getModuleInfo();
-check(($atlasInfo['version'] ?? null) === 111 && ($processInfo['version'] ?? null) === 111, 'public module versions are synchronized at ProcessWire version 111 / SemVer 1.1.1');
+check(($atlasInfo['version'] ?? null) === 120 && ($processInfo['version'] ?? null) === 120, 'public module versions are synchronized at ProcessWire version 120 / SemVer 1.2.0');
 check(($processInfo['permission'] ?? '') === 'atlas-admin' && isset($processInfo['permissions']['atlas-admin']), 'admin module declares a dedicated permission');
 
 $store = new AtlasStore();
@@ -378,6 +384,12 @@ check(abs($store->cosine([1, 0], [1, 0]) - 1.0) < 1e-12, 'identical cosine');
 check(abs($store->cosine([1, 0], [0, 1])) < 1e-12, 'orthogonal cosine');
 check(abs($store->cosine([1, 0], [-1, 0]) + 1.0) < 1e-12, 'opposite cosine');
 check($store->nearest('docs', [], 5) === [] && $store->lastError() !== '', 'invalid query reports store error');
+$lexical = new LexicalTestStore();
+$lexicalTokens = $lexical->tokens('What is an Aperol Spritz, please?');
+check($lexicalTokens === ['aperol', 'spritz'], 'lexical search removes question stop words');
+check($lexical->score('Classic Aperol Spritz recipe', '', $lexicalTokens) === 0.75, 'lexical phrase receives a strong score');
+check($lexical->score('Aperol cocktails', 'Aperol', $lexicalTokens) === 0.45, 'partial title match clears the fallback threshold');
+check($lexical->score('Negroni recipe', 'Negroni', $lexicalTokens) === 0.0, 'unrelated lexical result scores zero');
 $ddl = new DdlDatabase();
 $ddlStore = new AtlasStore();
 $ddlStore->services = ['database' => $ddl];
