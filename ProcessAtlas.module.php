@@ -34,7 +34,7 @@ class ProcessAtlas extends Process {
 	public static function getModuleInfo() {
 		return [
 			'title'    => 'Atlas',
-			'version'  => 120,
+			'version'  => 121,
 			'summary'  => 'Browse, search and maintain the Atlas RAG store.',
 			'author'   => 'Maxim Semenov',
 			'icon'     => 'database',

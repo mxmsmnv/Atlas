@@ -150,6 +150,19 @@ class LexicalTestStore extends AtlasStore {
 		return $this->lexicalScore($text, $title, $tokens);
 	}
 }
+class LockingTestStore extends AtlasStore {
+	public function lockClause($database): string { return $this->selectForUpdate($database); }
+}
+class TestDialect {
+	private $name;
+	public function __construct(string $name) { $this->name = $name; }
+	public function name(): string { return $this->name; }
+}
+class DialectDatabase {
+	private $dialect;
+	public function __construct(string $name) { $this->dialect = new TestDialect($name); }
+	public function dialect(): TestDialect { return $this->dialect; }
+}
 class BatchFacadeAtlas extends Atlas {
 	public function useStore(AtlasStore $store): void { $this->store = $store; }
 	protected function embed($input, array $opts, string $operation): ?array {
@@ -376,10 +389,14 @@ function check(bool $condition, string $message): void {
 check(is_string(json_encode(['detail' => "\xB1"], JSON_INVALID_UTF8_SUBSTITUTE)), 'invalid UTF-8 diagnostics remain JSON-encodable');
 $atlasInfo = Atlas::getModuleInfo();
 $processInfo = ProcessAtlas::getModuleInfo();
-check(($atlasInfo['version'] ?? null) === 120 && ($processInfo['version'] ?? null) === 120, 'public module versions are synchronized at ProcessWire version 120 / SemVer 1.2.0');
+check(($atlasInfo['version'] ?? null) === 121 && ($processInfo['version'] ?? null) === 121, 'public module versions are synchronized at ProcessWire version 121 / SemVer 1.2.1');
 check(($processInfo['permission'] ?? '') === 'atlas-admin' && isset($processInfo['permissions']['atlas-admin']), 'admin module declares a dedicated permission');
 
 $store = new AtlasStore();
+$lockingStore = new LockingTestStore();
+check($lockingStore->lockClause(new DialectDatabase('mysql')) === ' FOR UPDATE', 'MySQL uses row locking');
+check($lockingStore->lockClause(new DialectDatabase('pgsql')) === ' FOR UPDATE', 'PostgreSQL uses row locking');
+check($lockingStore->lockClause(new DialectDatabase('sqlite')) === '', 'SQLite relies on BEGIN IMMEDIATE rather than unsupported FOR UPDATE');
 check(abs($store->cosine([1, 0], [1, 0]) - 1.0) < 1e-12, 'identical cosine');
 check(abs($store->cosine([1, 0], [0, 1])) < 1e-12, 'orthogonal cosine');
 check(abs($store->cosine([1, 0], [-1, 0]) + 1.0) < 1e-12, 'opposite cosine');

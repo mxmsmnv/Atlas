@@ -2,6 +2,13 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] — 2026-09-26
+
+### Fixed
+
+- Made transactional collection replacement compatible with SQLite by relying on ProcessWire's `BEGIN IMMEDIATE` write lock there while retaining `FOR UPDATE` row locks on MySQL and PostgreSQL.
+- Documented MySQL, SQLite, and PostgreSQL storage support through ProcessWire's database layer.
+
 ## [1.2.0] — 2026-07-24
 
 ### Added

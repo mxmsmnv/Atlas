@@ -1,6 +1,6 @@
 # Atlas
 
-Atlas adds a lightweight retrieval-augmented generation (RAG) store to ProcessWire: it embeds text, keeps vectors in MySQL and returns the most relevant entries for a query. A local `lexicalSearch()` first pass is also available for latency-sensitive integrations that only need semantic retrieval when literal matches are weak.
+Atlas adds a lightweight retrieval-augmented generation (RAG) store to ProcessWire: it embeds text, keeps vectors in ProcessWire's configured SQL database and returns the most relevant entries for a query. A local `lexicalSearch()` first pass is also available for latency-sensitive integrations that only need semantic retrieval when literal matches are weak.
 
 ![Atlas](assets/Atlas.png)
 
@@ -23,7 +23,7 @@ If this project helps your work, consider supporting future development: [GitHub
 - Atomically replaces chunked documents and full-site indexes, preserving the previous data if embedding fails.
 - Builds domain-neutral page documents from core fields and optional ProFields, with labelled nested content and absolute media URLs.
 - Exposes ProcessWire hooks for custom field projections, external document sources and indexing notifications.
-- Stores everything in one MySQL table with no additional service dependency.
+- Stores everything in one ProcessWire database table with no additional service dependency.
 - Provides a ProcessWire admin area for browsing, searching, adding, deleting and rebuilding indexed content.
 
 Atlas is intended for collections up to roughly 10,000 entries. Larger corpora should use a dedicated vector database behind a custom storage implementation.
@@ -78,9 +78,9 @@ $wire->addHookAfter('ProcessAtlas::buildPageDocument', function(HookEvent $event
 
 - ProcessWire 3.0.200 or newer.
 - [Squad](https://github.com/mxmsmnv/Squad), installed and configured with an embedding-capable provider.
-- MySQL or MariaDB with InnoDB and `utf8mb4` support.
+- MySQL/MariaDB, SQLite, or PostgreSQL through ProcessWire's database layer.
 
-Atlas `1.0.0` is the first public release. ProcessWire represents this module version internally as `100`.
+Atlas `1.2.1` is the current release. ProcessWire represents this module version internally as `121`.
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # Atlas — API reference
 
-Atlas is a RAG store: it embeds text via [Squad](https://github.com/mxmsmnv/Squad), keeps the vectors in one MySQL table (`atlas_vectors`), and ranks by cosine similarity in PHP. This document covers the full public API of the `Atlas` module and the `AtlasStore` engine.
+Atlas is a RAG store: it embeds text via [Squad](https://github.com/mxmsmnv/Squad), keeps the vectors in one ProcessWire database table (`atlas_vectors`), and ranks by cosine similarity in PHP. This document covers the full public API of the `Atlas` module and the `AtlasStore` engine.
 
 - [Concepts](#concepts)
 - [Atlas module API](#atlas-module-api)
@@ -258,7 +258,7 @@ Table `atlas_vectors`:
 - **Embedding response preflight.** `addMany()` validates every returned vector and requires consistent dimensions before the first Store write, preventing a malformed provider response from partially writing the batch.
 - **DDL is request-cached.** A successful `ensureTable()` is remembered by the `AtlasStore` instance, so batch writes do not repeat `CREATE TABLE IF NOT EXISTS` for every item. `dropTable()` resets the cache.
 - **Batch writes are atomic.** `addMany()` delegates one `putMany()` transaction: collection compatibility is checked once, the UPSERT is prepared once, and any failed row rolls back the whole storage batch.
-- **Compatibility checks are transactional.** `put()`, `putMany()` and `replaceRef()` perform their model/dimension check with `FOR UPDATE` inside the write transaction, preventing parallel first writes from creating a mixed collection.
+- **Compatibility checks are transactional.** `put()`, `putMany()` and `replaceRef()` perform their model/dimension check with row locking on MySQL/PostgreSQL. SQLite transactions begin with `BEGIN IMMEDIATE`, which takes the database write lock before the same check, preventing parallel first writes from creating a mixed collection without unsupported `FOR UPDATE` syntax.
 - **Read failures are not empty data.** Overview, Collections, Search and collection browsing show a database error state when reads fail instead of claiming that no knowledge exists.
 - **Pagination is bounded.** A stale or hand-edited collection offset is clamped to the final valid page, and Search reports the number of results actually returned rather than the requested limit.
 - **`addMany()` is one embed call** — for very large reindexes, batch in groups (the ProcessAtlas reindex uses groups of 64).

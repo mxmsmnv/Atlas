@@ -618,7 +618,7 @@ class AtlasStore extends Wire {
 		$db = $this->wire('database');
 		try {
 			$db->beginTransaction();
-			$check = $db->prepare("SELECT 1 FROM `" . self::TABLE . "` WHERE `collection`=? LIMIT 1 FOR UPDATE");
+			$check = $db->prepare("SELECT 1 FROM `" . self::TABLE . "` WHERE `collection`=? LIMIT 1" . $this->selectForUpdate($db));
 			$check->execute([$staging]);
 			if (!$check->fetchColumn()) throw new \RuntimeException('Staging collection is empty or missing');
 			$db->prepare("DELETE FROM `" . self::TABLE . "` WHERE `collection`=?")->execute([$target]);
@@ -649,7 +649,7 @@ class AtlasStore extends Wire {
 			$sql .= " AND NOT (`ref`=? OR `ref` LIKE ?)";
 			$args[] = $excludeBase; $args[] = $this->likeEscape($excludeBase) . '#%';
 		}
-		$sql .= " LIMIT 1" . ($forUpdate ? " FOR UPDATE" : '');
+		$sql .= " LIMIT 1" . ($forUpdate ? $this->selectForUpdate($this->wire('database')) : '');
 		$stmt = $this->wire('database')->prepare($sql); $stmt->execute($args); $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 		if (!$row) return true;
 		$ok = (int)$row['dims'] === $dims && ((string)$row['model'] === '' || $model === '' || hash_equals((string)$row['model'], $model));
@@ -658,6 +658,13 @@ class AtlasStore extends Wire {
 			$this->wire('log')->error('atlas: collection model/dimensions mismatch for ' . $collection);
 		}
 		return $ok;
+	}
+
+	/** SQLite transactions begin IMMEDIATE, so the database write lock replaces row locking. */
+	protected function selectForUpdate($database): string {
+		if (!method_exists($database, 'dialect')) return ' FOR UPDATE';
+		$dialect = $database->dialect();
+		return method_exists($dialect, 'name') && $dialect->name() === 'sqlite' ? '' : ' FOR UPDATE';
 	}
 
 	protected function validIdentity(string $collection, string $ref): bool { return $collection !== '' && $ref !== '' && mb_strlen($collection) <= 128 && mb_strlen($ref) <= 190; }
