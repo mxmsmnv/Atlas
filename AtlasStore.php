@@ -61,7 +61,8 @@ class AtlasStore extends Wire {
 				"INSERT INTO `" . self::TABLE . "` (`collection`,`ref`,`text`,`meta`,`model`,`dims`,`vector`)
 				 VALUES (:c,:r,:t,:m,:mo,:d,:v)
 				 ON DUPLICATE KEY UPDATE `text`=VALUES(`text`), `meta`=VALUES(`meta`),
-				   `model`=VALUES(`model`), `dims`=VALUES(`dims`), `vector`=VALUES(`vector`)"
+				   `model`=VALUES(`model`), `dims`=VALUES(`dims`), `vector`=VALUES(`vector`),
+				   `modified`=UTC_TIMESTAMP()"
 			);
 			if (!$stmt->execute([
 				':c'  => $collection,
@@ -110,7 +111,8 @@ class AtlasStore extends Wire {
 				"INSERT INTO `" . self::TABLE . "` (`collection`,`ref`,`text`,`meta`,`model`,`dims`,`vector`)
 				 VALUES (:c,:r,:t,:m,:mo,:d,:v)
 				 ON DUPLICATE KEY UPDATE `text`=VALUES(`text`), `meta`=VALUES(`meta`),
-				   `model`=VALUES(`model`), `dims`=VALUES(`dims`), `vector`=VALUES(`vector`)"
+				   `model`=VALUES(`model`), `dims`=VALUES(`dims`), `vector`=VALUES(`vector`),
+				   `modified`=UTC_TIMESTAMP()"
 			);
 			foreach ($items as $item) {
 				if (!$stmt->execute([
@@ -622,7 +624,7 @@ class AtlasStore extends Wire {
 			$check->execute([$staging]);
 			if (!$check->fetchColumn()) throw new \RuntimeException('Staging collection is empty or missing');
 			$db->prepare("DELETE FROM `" . self::TABLE . "` WHERE `collection`=?")->execute([$target]);
-			$promote = $db->prepare("UPDATE `" . self::TABLE . "` SET `collection`=? WHERE `collection`=?");
+			$promote = $db->prepare("UPDATE `" . self::TABLE . "` SET `collection`=?, `modified`=UTC_TIMESTAMP() WHERE `collection`=?");
 			$promote->execute([$target, $staging]);
 			if ($promote->rowCount() < 1) throw new \RuntimeException('Staging collection promotion affected no rows');
 			$db->commit();

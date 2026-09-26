@@ -20,7 +20,7 @@ class Atlas extends WireData implements Module {
 	public static function getModuleInfo() {
 		return [
 			'title'    => 'Atlas',
-			'version'  => 121,
+			'version'  => 122,
 			'summary'  => __('Lightweight RAG store: embed text via Squad and retrieve by similarity.'),
 			'author'   => 'Maxim Semenov',
 			'icon'     => 'search',

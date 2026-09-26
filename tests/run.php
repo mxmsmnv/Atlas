@@ -389,7 +389,9 @@ function check(bool $condition, string $message): void {
 check(is_string(json_encode(['detail' => "\xB1"], JSON_INVALID_UTF8_SUBSTITUTE)), 'invalid UTF-8 diagnostics remain JSON-encodable');
 $atlasInfo = Atlas::getModuleInfo();
 $processInfo = ProcessAtlas::getModuleInfo();
-check(($atlasInfo['version'] ?? null) === 121 && ($processInfo['version'] ?? null) === 121, 'public module versions are synchronized at ProcessWire version 121 / SemVer 1.2.1');
+check(($atlasInfo['version'] ?? null) === 122 && ($processInfo['version'] ?? null) === 122, 'public module versions are synchronized at ProcessWire version 122 / SemVer 1.2.2');
+$storeSource = (string)file_get_contents(dirname(__DIR__) . '/AtlasStore.php');
+check(substr_count($storeSource, '`modified`=UTC_TIMESTAMP()') >= 2 && str_contains($storeSource, '`collection`=?, `modified`=UTC_TIMESTAMP()'), 'SQLite modification timestamps are maintained explicitly');
 check(($processInfo['permission'] ?? '') === 'atlas-admin' && isset($processInfo['permissions']['atlas-admin']), 'admin module declares a dedicated permission');
 
 $store = new AtlasStore();

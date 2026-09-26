@@ -2,6 +2,14 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.2.2] — 2026-09-26
+
+### Fixed
+
+- Explicitly refresh vector modification timestamps during upserts and staging
+  promotion so SQLite retains freshness, statistics, and purge semantics even
+  though it ignores MySQL's automatic `ON UPDATE` clause.
+
 ## [1.2.1] — 2026-09-26
 
 ### Fixed

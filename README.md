@@ -80,7 +80,7 @@ $wire->addHookAfter('ProcessAtlas::buildPageDocument', function(HookEvent $event
 - [Squad](https://github.com/mxmsmnv/Squad), installed and configured with an embedding-capable provider.
 - MySQL/MariaDB, SQLite, or PostgreSQL through ProcessWire's database layer.
 
-Atlas `1.2.1` is the current release. ProcessWire represents this module version internally as `121`.
+Atlas `1.2.2` is the current release. ProcessWire represents this module version internally as `122`.
 
 ## Installation
 
