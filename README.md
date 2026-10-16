@@ -80,7 +80,15 @@ $wire->addHookAfter('ProcessAtlas::buildPageDocument', function(HookEvent $event
 - [Squad](https://github.com/mxmsmnv/Squad), installed and configured with an embedding-capable provider.
 - MySQL/MariaDB, SQLite, or PostgreSQL through ProcessWire's database layer.
 
-Atlas `1.2.2` is the current release. ProcessWire represents this module version internally as `122`.
+Atlas `1.2.3` is the current release. ProcessWire represents this module version internally as `123`.
+
+## PocketWire
+
+Atlas opts into PocketWire through a status-only provider guarded by the
+current actor and `atlas-admin`. It does not enumerate collection names or
+sizes, return indexed text or metadata, inspect Squad/provider configuration,
+perform an embedding request, or expose indexing, reindexing and deletion
+actions. Collection diagnostics remain in Atlas's existing admin/API surfaces.
 
 ## Installation
 

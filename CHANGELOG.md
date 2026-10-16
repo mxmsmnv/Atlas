@@ -2,6 +2,14 @@
 
 All notable changes to Atlas are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.2.3] — 2026-10-16
+
+### Added
+
+- Added an opt-in, current-actor PocketWire status provider guarded by
+  `atlas-admin`, without collection identities, indexed content, provider
+  configuration, external embedding requests or write tools.
+
 ## [1.2.2] — 2026-09-26
 
 ### Fixed

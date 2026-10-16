@@ -1,6 +1,7 @@
 <?php namespace ProcessWire;
 
 require_once(__DIR__ . '/AtlasStore.php');
+require_once(__DIR__ . '/src/AtlasPocketWireProviderTrait.php');
 
 /**
  * Atlas — a lightweight RAG store for ProcessWire.
@@ -16,16 +17,18 @@ require_once(__DIR__ . '/AtlasStore.php');
  *   $hits = $r->search('faq', 'forgot password', 3); // [['ref','text','score',...]]
  */
 class Atlas extends WireData implements Module {
+	use AtlasPocketWireProviderTrait;
 
 	public static function getModuleInfo() {
 		return [
 			'title'    => 'Atlas',
-			'version'  => 122,
+			'version'  => 123,
 			'summary'  => __('Lightweight RAG store: embed text via Squad and retrieve by similarity.'),
 			'author'   => 'Maxim Semenov',
 			'icon'     => 'search',
 			'singular' => true,
 			'autoload' => false,
+			'pocketWireProvider' => true,
 			'requires' => ['ProcessWire>=3.0.200', 'Squad'],
 		];
 	}
